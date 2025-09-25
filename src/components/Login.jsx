@@ -47,7 +47,7 @@ const AdminLogin = () => {
       {/* Demo credentials banner on body */}
       <div className="absolute top-6 text-center w-full">
         <div className="inline-block bg-blue-50 border-l-4 border-blue-400 text-blue-700 px-6 py-3 rounded-md shadow-md text-sm">
-          <p><strong>Demo Credentials:</strong> Email: <span className="font-medium">admin@example.com</span> | Password: <span className="font-medium">Admin123</span></p>
+          <p><strong>Demo Credentials:</strong> Email: <span className="font-medium">admin@example.com</span> | Password: <span className="font-medium">Admin@123</span></p>
         </div>
       </div>
 
