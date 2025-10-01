@@ -58,95 +58,59 @@ const AddNewAdmin = () => {
   if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-6 w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-4"
+        className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        <h1 className="col-span-2 text-2xl font-bold text-center mb-4">ADD NEW ADMIN</h1>
+        <h1 className="col-span-2 text-3xl font-bold text-center text-gray-800 mb-6">
+          Add New Admin
+        </h1>
 
-        <input
-          name="firstName"
-          type="text"
-          placeholder="First Name"
-          value={form.firstName}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
-        <input
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          value={form.lastName}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
-        <input
-          name="phone"
-          type="text"
-          placeholder="Mobile Number"
-          value={form.phone}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
-        <input
-          name="nic"
-          type="text"
-          placeholder="NIC"
-          value={form.nic}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
-        <input
-          name="dob"
-          type="date"
-          value={form.dob}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
+        {[
+          { name: "firstName", placeholder: "First Name", type: "text" },
+          { name: "lastName", placeholder: "Last Name", type: "text" },
+          { name: "email", placeholder: "Email", type: "email" },
+          { name: "phone", placeholder: "Mobile Number", type: "text" },
+          { name: "nic", placeholder: "NIC", type: "text" },
+          { name: "dob", placeholder: "Date of Birth", type: "date" },
+          { name: "password", placeholder: "Password", type: "password" },
+        ].map((field) => (
+          <input
+            key={field.name}
+            name={field.name}
+            type={field.type}
+            placeholder={field.placeholder}
+            value={form[field.name]}
+            onChange={handleChange}
+            required
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm"
+          />
+        ))}
+
         <select
           name="gender"
           value={form.gender}
           onChange={handleChange}
-          className="p-3 border rounded"
           required
+          className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm"
         >
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="p-3 border rounded"
-          required
-        />
+
         <button
           type="submit"
           disabled={submitting}
-          className={`col-span-2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`col-span-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 ${submitting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
           {submitting ? "Adding..." : "Register New Admin"}
         </button>
       </form>
     </div>
+
   );
 };
 

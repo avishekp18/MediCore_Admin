@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     setAdmin(userData);
     setIsAuthenticated(true);
+    setLoading(false);
   };
 
   // Log out by clearing context and optional backend call

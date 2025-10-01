@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { AiFillMessage } from "react-icons/ai";
@@ -7,15 +8,15 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { MdAddModerator } from "react-icons/md";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useAuth } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  if (!isAuthenticated) return null; // don't show navbar if not logged in
+  if (!isAuthenticated) return null;
 
   const menuItems = [
     { label: "Home", icon: <TiHome size={20} />, path: "/" },
@@ -27,53 +28,71 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await logout(); // clears auth state
+      await logout();
       toast.success("Logged out successfully!");
-      navigate("/login", { replace: true }); // immediate redirect
-    } catch (err) {
+      navigate("/login", { replace: true });
+    } catch {
       toast.error("Logout failed!");
     }
   };
 
   return (
     <>
-      <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md fixed w-full z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md fixed w-full z-20">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
 
             {/* Logo */}
-            <div className="flex-shrink-0 cursor-pointer" onClick={() => navigate("/")}>
-              <span className="text-xl font-bold">MediCore</span>
+            <div
+              className="flex items-center cursor-pointer space-x-2"
+            >
+              <div className="md:hidden flex items-center cursor-pointer">
+                <GiHamburgerMenu
+                  size={24}
+                  className="cursor-pointer"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                />
+              </div>
+              <span
+                onClick={() => navigate("/")}
+                className="text-2xl font-bold select-none">MediCore</span>
+              <svg
+                className="w-5 h-5 text-yellow-400 -translate-y-1"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2c1 0 2 .5 2 1.5s-1 1.5-2 1.5-2-.5-2-1.5S11 2 12 2zM6 9c1-1 4-1 4-1s3 0 4 1c0 0 0 2-4 2s-4-2-4-2zM2 18c1-3 6-6 10-6s9 3 10 6H2z" />
+              </svg>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-6 items-center">
-              {menuItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => navigate(item.path)}
-                  className="flex items-center space-x-1 hover:text-indigo-300 transition"
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              {menuItems.map(item => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <button
+                    key={item.label}
+                    onClick={() => navigate(item.path)}
+                    className={`flex items-center space-x-1 px-3 py-2 rounded cursor-pointer transition-colors duration-200 ${isActive
+                      ? "border-b-2 border-yellow-400 text-yellow-300"
+                      : "hover:text-yellow-200"
+                      }`}
+                  >
+                    {item.icon}
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                );
+              })}
+
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-1 hover:text-red-400 transition"
+                className="flex items-center space-x-1 px-3 py-2 rounded hover:text-red-400 cursor-pointer transition"
               >
                 <RiLogoutBoxFill size={20} />
                 <span>Logout</span>
               </button>
-            </div>
-
-            {/* Mobile Hamburger */}
-            <div className="md:hidden flex items-center">
-              <GiHamburgerMenu
-                size={28}
-                className="cursor-pointer"
-                onClick={() => setMenuOpen(!menuOpen)}
-              />
             </div>
           </div>
         </div>
@@ -94,20 +113,21 @@ const Navbar = () => {
           >
             MediCore
           </span>
-          <button className="text-white focus:outline-none" onClick={() => setMenuOpen(false)}>
+          <button className="text-white cursor-pointer focus:outline-none" onClick={() => setMenuOpen(false)}>
             ✕
           </button>
         </div>
 
         <div className="flex flex-col mt-4 space-y-2 px-4">
-          {menuItems.map((item) => (
+          {menuItems.map(item => (
             <button
               key={item.label}
               onClick={() => {
                 navigate(item.path);
                 setMenuOpen(false);
               }}
-              className="flex items-center space-x-2 hover:bg-indigo-600 px-3 py-2 rounded transition"
+              className={`flex items-center space-x-2 px-3 py-2 rounded cursor-pointer transition ${location.pathname === item.path ? "bg-yellow-500 text-white" : "hover:bg-indigo-600"
+                }`}
             >
               {item.icon}
               <span>{item.label}</span>
@@ -115,7 +135,7 @@ const Navbar = () => {
           ))}
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-2 text-red-400 hover:text-red-200 px-3 py-2 rounded transition mt-2"
+            className="flex items-center space-x-2 px-3 py-2 rounded text-red-400 cursor-pointer hover:text-red-200 hover:bg-indigo-600 transition mt-2"
           >
             <RiLogoutBoxFill size={20} />
             <span>Logout</span>
@@ -126,7 +146,7 @@ const Navbar = () => {
       {/* Overlay */}
       {menuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-30"
+          className="fixed inset-0  bg-opacity-30 z-30"
           onClick={() => setMenuOpen(false)}
         />
       )}

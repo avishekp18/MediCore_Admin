@@ -90,132 +90,93 @@ const AddNewDoctor = () => {
   if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-6 w-full max-w-4xl flex flex-col md:flex-row gap-6"
+        className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-5xl flex flex-col md:flex-row gap-8"
       >
         {/* Avatar Section */}
         <div className="flex flex-col items-center gap-4">
-          <div className="relative group">
-            {/* Avatar Image */}
+          <div className="relative group w-44 h-44">
             <img
               src={docAvatarPreview || "/docHolder.jpg"}
               alt="Doctor Avatar"
-              className="w-40 h-40 object-cover rounded-full border-2 border-gray-300 shadow-lg transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover rounded-full border-4 border-gray-200 shadow-lg transition-transform duration-300 group-hover:scale-105"
             />
-
-            {/* Hidden file input */}
             <input
               type="file"
               accept="image/png,image/jpeg,image/webp"
               onChange={handleAvatar}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
             />
+            <span className="absolute bottom-0 right-0 w-6 h-6 bg-blue-500 rounded-full border-2 border-white flex items-center justify-center text-white text-sm font-bold shadow-md">
+              +
+            </span>
           </div>
-
-          {/* Optional: small text */}
-          <p className="text-sm text-gray-500">Click the avatar to upload a new photo</p>
+          <p className="text-sm text-gray-500 text-center">Click avatar to upload a new photo</p>
         </div>
 
-
         {/* Form Inputs */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            name="firstName"
-            type="text"
-            placeholder="First Name"
-            value={form.firstName}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            name="lastName"
-            type="text"
-            placeholder="Last Name"
-            value={form.lastName}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            name="phone"
-            type="text"
-            placeholder="Mobile Number"
-            value={form.phone}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            name="nic"
-            type="text"
-            placeholder="NIC"
-            value={form.nic}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            name="dob"
-            type="date"
-            value={form.dob}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5">
+          {[
+            { name: "firstName", placeholder: "First Name", type: "text" },
+            { name: "lastName", placeholder: "Last Name", type: "text" },
+            { name: "email", placeholder: "Email", type: "email" },
+            { name: "phone", placeholder: "Mobile Number", type: "text" },
+            { name: "nic", placeholder: "NIC", type: "text" },
+            { name: "dob", placeholder: "Date of Birth", type: "date" },
+            { name: "password", placeholder: "Password", type: "password" },
+          ].map((field) => (
+            <input
+              key={field.name}
+              name={field.name}
+              type={field.type}
+              placeholder={field.placeholder}
+              value={form[field.name]}
+              onChange={handleChange}
+              required
+              className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm"
+            />
+          ))}
+
           <select
             name="gender"
             value={form.gender}
             onChange={handleChange}
-            className="p-3 border rounded"
             required
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm"
           >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            className="p-3 border rounded"
-            required
-          />
+
           <select
             name="doctorDepartment"
             value={form.doctorDepartment}
             onChange={handleChange}
-            className="p-3 border rounded col-span-2"
             required
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm col-span-2"
           >
             <option value="">Select Department</option>
             {departmentsArray.map((dept, i) => (
-              <option key={i} value={dept}>{dept}</option>
+              <option key={i} value={dept}>
+                {dept}
+              </option>
             ))}
           </select>
+
           <button
             type="submit"
             disabled={submitting}
-            className={`col-span-2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`col-span-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             {submitting ? "Adding..." : "Register New Doctor"}
           </button>
         </div>
       </form>
     </div>
+
   );
 };
 
