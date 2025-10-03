@@ -40,7 +40,7 @@ const Doctors = () => {
 
   const handleDelete = async (id) => {
     try {
-      axios.delete(`https://medicore-backend-sv2c.onrender.com/api/v1/user/doctor/${id}`, { withCredentials: true });
+      await axios.delete(`https://medicore-backend-sv2c.onrender.com/api/v1/user/doctor/${id}`, { withCredentials: true });
       setDoctors((prev) => {
         const updated = prev.filter((doc) => doc._id !== id);
         cachedDoctors = updated; // keep cache in sync
