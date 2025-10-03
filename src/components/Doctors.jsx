@@ -73,7 +73,7 @@ const Doctors = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://medicore-backend-sv2c.onrender.com/api/v1/admin/doctor/${selectedId}`, editForm, { withCredentials: true });
+      await axios.put(`https://medicore-backend-sv2c.onrender.com/api/v1/user/doctor/${selectedId}`, editForm, { withCredentials: true });
 
       setDoctors((prev) => {
         const updated = prev.map((doc) =>
