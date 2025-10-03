@@ -40,7 +40,7 @@ const Doctors = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://medicore-backend-sv2c.onrender.com/api/v1/user/doctor/${id}`, { withCredentials: true });
+      await axios.delete(`https://medicore-backend-sv2c.onrender.com/api/v1/user/${id}`, { withCredentials: true });
       setDoctors((prev) => {
         const updated = prev.filter((doc) => doc._id !== id);
         cachedDoctors = updated; // keep cache in sync
@@ -73,7 +73,7 @@ const Doctors = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://medicore-backend-sv2c.onrender.com/api/v1/user/doctor/${selectedId}`, editForm, { withCredentials: true });
+      await axios.put(`https://medicore-backend-sv2c.onrender.com/api/v1/user/${selectedId}`, editForm, { withCredentials: true });
 
       setDoctors((prev) => {
         const updated = prev.map((doc) =>
