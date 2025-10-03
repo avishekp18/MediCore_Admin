@@ -26,7 +26,7 @@ const Doctors = () => {
     setLoadingDoctors(true);
     try {
       const { data } = await axios.get(
-        "https://medicore-backend-sv2c.onrender.com/api/v1/user/doctors",
+        "https://medicore-backend-sv2c.onrender.com/api/v1/doctors",
         { withCredentials: true }
       );
       setDoctors(data.doctors || []);
@@ -40,10 +40,7 @@ const Doctors = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://medicore-backend-sv2c.onrender.com/api/v1/admin/${id}`,
-        { withCredentials: true }
-      );
+      axios.delete(`https://medicore-backend-sv2c.onrender.com/api/v1/admin/${id}`, { withCredentials: true });
       setDoctors((prev) => {
         const updated = prev.filter((doc) => doc._id !== id);
         cachedDoctors = updated; // keep cache in sync
@@ -76,11 +73,7 @@ const Doctors = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `https://medicore-backend-sv2c.onrender.com/api/v1/admin/${selectedId}`,
-        editForm,
-        { withCredentials: true }
-      );
+      await axios.put(`https://medicore-backend-sv2c.onrender.com/api/v1/admin/${selectedId}`, editForm, { withCredentials: true });
 
       setDoctors((prev) => {
         const updated = prev.map((doc) =>
