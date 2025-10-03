@@ -26,7 +26,7 @@ const Doctors = () => {
     setLoadingDoctors(true);
     try {
       const { data } = await axios.get(
-        "https://medicore-backend-sv2c.onrender.com/api/v1/doctors",
+        "https://medicore-backend-sv2c.onrender.com/api/v1/user/doctors",
         { withCredentials: true }
       );
       setDoctors(data.doctors || []);
