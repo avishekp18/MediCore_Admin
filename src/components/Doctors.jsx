@@ -163,7 +163,7 @@ const Doctors = () => {
                   onClick={() => navigator.clipboard.writeText(doctor.email)}
                   className="flex items-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-xl hover:bg-indigo-700 transition"
                 >
-                  <Mail size={16} /> Copy Email
+                  <Mail size={16} /> Copy
                 </button>
                 <button
                   onClick={() => handleEditClick(doctor)}
